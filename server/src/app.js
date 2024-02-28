@@ -16,7 +16,7 @@ const corsOptions = {
   origin: process.env.ORIGIN.split(","),
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
-  optionsSuccessStatus: 204,
+  optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
 
