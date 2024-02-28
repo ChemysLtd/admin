@@ -1,9 +1,9 @@
-// crud-admin/client/src/components/auth/Login.jsx
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../services/authService";
 import loginBg from "../../assets/images/admin-login-bg.png";
+import DeleteIcon from "../../assets/icons/DeleteIcon";
+import ShowIcon from "../../assets/icons/ShowIcon";
 
 function Login() {
   const [credentials, setCredentials] = useState({
@@ -12,6 +12,7 @@ function Login() {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showPassword, setShowPassword] = useState(false); // State to track password visibility
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -20,6 +21,10 @@ function Login() {
       ...prevCredentials,
       [name]: value,
     }));
+  };
+
+  const handleTogglePassword = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
   };
 
   const handleLogin = async () => {
@@ -70,13 +75,22 @@ function Login() {
             <span className="block text-md font-medium text-gray-600">
               Password:
             </span>
-            <input
-              type="password"
-              name="password"
-              className="w-full border rounded-md p-2 focus:outline-none focus:ring focus:border-blue-500"
-              value={credentials.password}
-              onChange={handleChange}
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                className="w-full border rounded-md p-2 focus:outline-none focus:ring focus:border-blue-500"
+                value={credentials.password}
+                onChange={handleChange}
+              />
+              <button
+                type="button"
+                className="absolute inset-y-0 right-0 px-3 flex items-center focus:outline-none"
+                onClick={handleTogglePassword}
+              >
+                {showPassword ? <DeleteIcon color="#000000" /> : <ShowIcon />}
+              </button>
+            </div>
           </label>
           <button
             type="button"
